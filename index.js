@@ -11,7 +11,15 @@ const server = http.createServer(app);
 require("dotenv").config();
 require("colors");
 
-app.use(cors());
+// CORS configuration for frontend
+app.use(
+  cors({
+    origin: "https://dashboard-sooty-alpha.vercel.app", // Your frontend URL
+    methods: ["POST", "GET", "PUT", "DELETE"],
+    credentials: true, // Include if sending cookies or auth headers
+  })
+);
+
 connectDB();
 
 app.use(express.json());
@@ -26,7 +34,7 @@ app.use(errorHandler);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://dashboard-sooty-alpha.vercel.app", // Match frontend URL
     methods: ["POST", "GET", "PUT", "DELETE"],
   },
 });
